@@ -18,3 +18,12 @@ class ProductPage(BasePage):
     def should_be_add_to_cart_message_with_price(self):
         assert (self.text_of_element(*PPL.PRODUCT_PRICE) == self.text_of_element(*PPL.CART_PRICE_MESSAGE)), \
             'Wrong message after adding item to card. No price present'
+
+    def should_not_be_success_message(self):
+        #self.browser.find_element(*PPL.SUCCESS_MESSAGE_CLOSE).click()
+        assert self.is_not_element_present(*PPL.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_disappear_success_message(self):
+        assert self.is_disappeared(*PPL.SUCCESS_MESSAGE), \
+            "Success message is not disappeared"
