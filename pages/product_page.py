@@ -20,7 +20,6 @@ class ProductPage(BasePage):
             'Wrong message after adding item to card. No price present'
 
     def should_not_be_success_message(self):
-        #self.browser.find_element(*PPL.SUCCESS_MESSAGE_CLOSE).click()
         assert self.is_not_element_present(*PPL.SUCCESS_MESSAGE), \
             "Success message is presented, but should not be"
 
