@@ -6,13 +6,13 @@ from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 
 base_link = 'https://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/'
-product_base_link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"  # link for quiz task
+product_base_link = "https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"  # link for quiz task
 bad_links = [7]
 urls = [f"{product_base_link}/?promo=offer{no}" for no in range(1) if no not in bad_links]
 # Only 1 link in urls "range(1)", not 10 because we already know bad link, not need 10 identical test
 bad_urls = [f"{product_base_link}/?promo=offer{no}" for no in bad_links]
 
-
+@pytest.mark.need_review
 @pytest.mark.parametrize('link',
                          urls + list(map(lambda x: pytest.param(x, marks=pytest.mark.xfail(strict=True)), bad_urls)))
 def test_guest_can_add_product_to_basket(browser, link):
@@ -57,6 +57,7 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page.should_be_login_link()
 
 
+@pytest.mark.need_review
 @pytest.mark.to_login_page
 def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser, base_link)
@@ -64,6 +65,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page.go_to_login_page()
 
 
+@pytest.mark.need_review
 @pytest.mark.basket
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page = ProductPage(browser, base_link)
@@ -85,8 +87,9 @@ class TestUserAddToBasketFromProductPage:
         page.register_new_user(email, "Somepassword")
         page.should_be_authorized_user()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
-        promo_link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1"
+        promo_link = "https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1"
         page = ProductPage(browser, promo_link)
         page.open()
         page.should_be_add_to_cart_button()
